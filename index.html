@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 5th & 6th Day Volunteers</title>
+<style>
+  :root {
+    --bg: #f0f4f8;
+    --surface: #ffffff;
+    --surface-2: #f8fafc;
+    --text-primary: #1a2332;
+    --text-secondary: #4a5568;
+    --text-muted: #718096;
+    --border: #e2e8f0;
+    --border-strong: #cbd5e0;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --accent-light: #eff6ff;
+    --accent-border: #bfdbfe;
+    --success: #059669;
+    --success-light: #ecfdf5;
+    --success-border: #a7f3d0;
+    --warning: #b45309;
+    --warning-light: #fffbeb;
+    --warning-border: #fcd34d;
+    --shift-1: #7c3aed;
+    --shift-1-light: #f5f3ff;
+    --shift-1-border: #ddd6fe;
+    --shift-2: #c2410c;
+    --shift-2-light: #fff7ed;
+    --shift-2-border: #fed7aa;
+    --radius: 10px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.06);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    min-height: 100vh;
+    padding: 2rem 1rem 4rem;
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    max-width: 680px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .year-badge {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+
+  .page-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.2;
+  }
+
+  .page-header p {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-top: 8px;
+    line-height: 1.6;
+  }
+
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .card {
+    background: var(--surface);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    padding: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .card h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card h2 .icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: var(--accent-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .form-group.full {
+    grid-column: 1 / -1;
+  }
+
+  label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+  }
+
+  input, select {
+    padding: 10px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 15px;
+    font-family: inherit;
+    color: var(--text-primary);
+    background: var(--surface-2);
+    transition: border-color 0.15s, box-shadow 0.15s;
+    outline: none;
+    width: 100%;
+  }
+
+  input:focus, select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+    background: #fff;
+  }
+
+  input::placeholder { color: var(--text-muted); }
+
+  .submit-btn {
+    width: 100%;
+    padding: 12px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 15px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    margin-top: 1.25rem;
+    transition: background 0.15s, transform 0.1s;
+  }
+
+  .submit-btn:hover { background: var(--accent-hover); }
+  .submit-btn:active { transform: scale(0.99); }
+  .submit-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+
+  .toast {
+    display: none;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 1rem;
+    line-height: 1.5;
+  }
+
+  .toast.success {
+    background: var(--success-light);
+    border: 1px solid var(--success-border);
+    color: var(--success);
+  }
+
+  .toast.error {
+    background: #fff5f5;
+    border: 1px solid #fc8181;
+    color: #c53030;
+  }
+
+  .toast.warning {
+    background: var(--warning-light);
+    border: 1px solid var(--warning-border);
+    color: var(--warning);
+  }
+
+  .toast svg { flex-shrink: 0; margin-top: 1px; }
+
+  /* My signups section */
+  .my-signups-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .my-signups-header h2 { margin-bottom: 0; }
+
+  .count-badge {
+    background: var(--accent-light);
+    color: var(--accent);
+    border: 1px solid var(--accent-border);
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 10px;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+
+  .empty-state svg {
+    display: block;
+    margin: 0 auto 10px;
+    opacity: 0.3;
+  }
+
+  .signup-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    gap: 1rem;
+  }
+
+  .signup-item:last-child { border-bottom: none; }
+  .signup-info { flex: 1; min-width: 0; }
+
+  .signup-name {
+    font-weight: 600;
+    font-size: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .signup-meta {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .signup-tags {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .tag {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 3px 9px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .tag-shift1 { background: var(--shift-1-light); color: var(--shift-1); border: 1px solid var(--shift-1-border); }
+  .tag-shift2 { background: var(--shift-2-light); color: var(--shift-2); border: 1px solid var(--shift-2-border); }
+  .tag-hours  { background: var(--surface-2); color: var(--text-secondary); border: 1px solid var(--border); }
+
+  .cancel-btn {
+    background: none;
+    border: 1.5px solid var(--border);
+    cursor: pointer;
+    color: var(--text-muted);
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+    transition: color 0.15s, background 0.15s, border-color 0.15s;
+  }
+
+  .cancel-btn:hover { color: #c53030; background: #fff5f5; border-color: #fc8181; }
+
+  /* Modal overlay */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .modal-overlay.active { display: flex; }
+
+  .modal {
+    background: var(--surface);
+    border-radius: 14px;
+    padding: 1.75rem;
+    max-width: 420px;
+    width: 100%;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  }
+
+  .modal h3 {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .modal p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+  }
+
+  .modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+  }
+
+  .modal-cancel {
+    padding: 9px 18px;
+    background: var(--surface-2);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 14px;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    color: var(--text-secondary);
+  }
+
+  .modal-confirm {
+    padding: 9px 18px;
+    background: #c53030;
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 14px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+  }
+
+  .modal-confirm:hover { background: #9b2c2c; }
+
+  @media (max-width: 520px) {
+    .form-grid { grid-template-columns: 1fr; }
+    .signup-item { flex-wrap: wrap; }
+    .signup-tags { justify-content: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="year-badge" id="yearBadge">2026</div>
+  <h1>5th &amp; 6th Day Volunteers</h1>
+  <p>Sign up to work additional days. Fill out the form below and select (Submit request) to have your name added to the calendar. Supervisors will follow up with individuals that are added to the labor plan.</p>
+</div>
+
+<div class="container">
+
+  <!-- Sign-up form -->
+  <div class="card">
+    <h2>
+      <span class="icon">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+      </span>
+      Submit a request for your 5th/6th days
+    </h2>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="empName">Your name</label>
+        <input type="text" id="empName" placeholder="First and last name" autocomplete="name" oninput="onNameInput()">
+      </div>
+
+      <div class="form-group">
+        <label for="empId">Employee ID</label>
+        <input type="number" id="empId" placeholder="Enter your ID number" autocomplete="off" inputmode="numeric">
+      </div>
+
+      <div class="form-group">
+        <label for="shiftSelect">Shift</label>
+        <select id="shiftSelect">
+          <option value="">Select shift…</option>
+          <option value="1st Shift">1st Shift</option>
+          <option value="2nd Shift">2nd Shift</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="hoursSelect">Hours</label>
+        <select id="hoursSelect">
+          <option value="">Select hours…</option>
+          <option value="6">6 hours</option>
+          <option value="8">8 hours</option>
+          <option value="10">10 hours</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="workDate">Date</label>
+        <input type="date" id="workDate">
+      </div>
+
+      <div class="form-group">
+        <label for="noteField">Note (optional)</label>
+        <input type="text" id="noteField" placeholder="Any additional info">
+      </div>
+    </div>
+
+    <button class="submit-btn" onclick="addSignup()">
+      Submit request
+    </button>
+
+    <div class="toast success" id="successToast">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      <span id="toastMsg"></span>
+    </div>
+
+    <div class="toast error" id="errorToast">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <span id="errorMsg"></span>
+    </div>
+
+    <div class="toast warning" id="warningToast">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <span id="warningMsg"></span>
+    </div>
+  </div>
+
+  <!-- My Signups -->
+  <div class="card" id="mySignupsCard" style="display:none;">
+    <div class="my-signups-header">
+      <h2>
+        <span class="icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </span>
+        <span id="signupsHeading">My signups</span>
+      </h2>
+      <span class="count-badge" id="countBadge">0</span>
+    </div>
+    <div id="signupList">
+      <div class="empty-state" id="emptySignups" style="display:none;">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        No signups found for this name on this device.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Confirm cancel modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h3>Remove this signup?</h3>
+    <p id="modalDesc">This will remove your signup from the schedule. If you've already been added to the labor plan, contact your supervisor directly.</p>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeModal()">Keep it</button>
+      <button class="modal-confirm" onclick="confirmRemove()">Yes, remove</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbywJ-i3F-8W3g68CuvsBLaykDH_JqYNfWCfv0kukwlYtcJJXoG1-A8NV5MWWPgawkOV/exec';
+  const YEAR = new Date().getFullYear();
+  document.getElementById('yearBadge').textContent = YEAR;
+  document.title = YEAR + ' 5th & 6th Day Volunteers';
+
+  let currentSignups = [];
+  let pendingRemoveId = null;
+  let nameTimer = null;
+
+  (function setDateLimits() {
+    const today = new Date();
+    const min = new Date(today);
+    min.setDate(min.getDate() + 1);
+    const max = new Date(today);
+    max.setMonth(max.getMonth() + 1);
+    const fmt = d => d.toISOString().split('T')[0];
+    const picker = document.getElementById('workDate');
+    picker.min = fmt(min);
+    picker.max = fmt(max);
+  })();
+
+  function formatDisplayName(fullName) {
+    const parts = fullName.trim().split(/\s+/);
+    if (parts.length < 2) return fullName;
+    return parts[0].charAt(0).toUpperCase() + '. ' + parts.slice(1).join(' ');
+  }
+
+  // Debounce name input so we don't query on every keystroke
+  function onNameInput() {
+    clearTimeout(nameTimer);
+    const name = document.getElementById('empName').value.trim();
+    if (!name) {
+      document.getElementById('mySignupsCard').style.display = 'none';
+      return;
+    }
+    nameTimer = setTimeout(() => fetchSignups(name), 600);
+  }
+
+  function fetchSignups(name) {
+    const card    = document.getElementById('mySignupsCard');
+    const heading = document.getElementById('signupsHeading');
+    const badge   = document.getElementById('countBadge');
+
+    const firstName = name.trim().split(/\s+/)[0];
+    heading.textContent = firstName + "\u2019s signups";
+    badge.textContent = 'Loading...';
+    card.style.display = 'block';
+
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'getSignups', name })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        currentSignups = data.signups || [];
+        renderSignups(name);
+      }
+    })
+    .catch(() => {
+      badge.textContent = 'Could not load';
+    });
+  }
+
+  function addSignup() {
+    const name  = document.getElementById('empName').value.trim();
+    const empId = document.getElementById('empId').value.trim();
+    const shift = document.getElementById('shiftSelect').value;
+    const hours = document.getElementById('hoursSelect').value;
+    const date  = document.getElementById('workDate').value;
+    const note  = document.getElementById('noteField').value.trim();
+
+    if (!name)  { highlight('empName');     showError('Please enter your name.');        return; }
+    if (!empId) { highlight('empId');       showError('Please enter your Employee ID.'); return; }
+    if (!shift) { highlight('shiftSelect'); showError('Please select a shift.');         return; }
+    if (!hours) { highlight('hoursSelect'); showError('Please select number of hours.'); return; }
+    if (!date)  { highlight('workDate');    showError('Please select a date.');          return; }
+
+    // Check for duplicate signup on same day
+    const duplicate = currentSignups.find(s => s.date === date);
+    if (duplicate) {
+      showError('You are already signed up for ' + formatDate(date) + '. You can only sign up once per day.');
+      highlight('workDate');
+      return;
+    }
+
+    const now         = new Date();
+    const selected    = new Date(date + 'T00:00:00');
+    const hoursUntil  = (selected - now) / (1000 * 60 * 60);
+    const oneMonthOut = new Date(now);
+    oneMonthOut.setMonth(oneMonthOut.getMonth() + 1);
+
+    if (selected > oneMonthOut) {
+      showError('Requests can only be submitted up to 1 month in advance. Please select an earlier date.');
+      highlight('workDate');
+      return;
+    }
+
+    const lateNotice = hoursUntil < 48;
+    const btn = document.querySelector('.submit-btn');
+    btn.textContent = 'Submitting\u2026';
+    btn.disabled = true;
+
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'add', name, empId, shift, hours, date, note })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        if (lateNotice) {
+          showWarning('Your request was submitted with less than 48 hours notice. Please submit request directly to Supervisor to make sure you are added to the calendar.');
+        } else {
+          showSuccess('Request submitted for ' + formatDate(date) + ' (' + shift + ', ' + hours + ' hrs).');
+        }
+        document.getElementById('shiftSelect').value = '';
+        document.getElementById('hoursSelect').value = '';
+        document.getElementById('workDate').value    = '';
+        document.getElementById('noteField').value   = '';
+        fetchSignups(name);
+      } else if (data.error === 'invalid_id') {
+        showError('Employee ID does not match. Please try again or see your Supervisor for assistance.');
+        highlight('empId');
+      } else if (data.error === 'duplicate') {
+        showError('You are already signed up for ' + formatDate(date) + '. You can only sign up once per day.');
+        highlight('workDate');
+      } else {
+        showError('Something went wrong. Please try again.');
+      }
+    })
+    .catch(() => {
+      showError('Could not reach the server. Check your connection and try again.');
+    })
+    .finally(() => {
+      btn.textContent = 'Submit request';
+      btn.disabled = false;
+    });
+  }
+
+  function renderSignups(name) {
+    const list  = document.getElementById('signupList');
+    const badge = document.getElementById('countBadge');
+    const empty = document.getElementById('emptySignups');
+
+    badge.textContent = currentSignups.length + (currentSignups.length === 1 ? ' signup' : ' signups');
+
+    Array.from(list.children).forEach(el => {
+      if (el.id !== 'emptySignups') el.remove();
+    });
+
+    if (currentSignups.length === 0) {
+      empty.style.display = 'block';
+      return;
+    }
+
+    empty.style.display = 'none';
+
+    currentSignups.forEach(s => {
+      const div = document.createElement('div');
+      div.className = 'signup-item';
+      const tagClass = s.shift === '1st Shift' ? 'tag-shift1' : 'tag-shift2';
+      div.innerHTML =
+        '<div class="signup-info">' +
+          '<div class="signup-name">' + escHtml(s.name) + '</div>' +
+          '<div class="signup-meta">' + formatDate(s.date) + (s.note ? ' \u00b7 ' + escHtml(s.note) : '') + '</div>' +
+        '</div>' +
+        '<div class="signup-tags">' +
+          '<span class="tag ' + tagClass + '">' + escHtml(s.shift) + '</span>' +
+          '<span class="tag tag-hours">' + escHtml(s.hours) + ' hrs</span>' +
+        '</div>' +
+        '<button class="cancel-btn" onclick="promptRemove(' + s.id + ', \'' + escHtml(s.name) + '\', \'' + s.date + '\', \'' + escHtml(s.shift) + '\')">' +
+          '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>' +
+          ' Remove' +
+        '</button>';
+      list.appendChild(div);
+    });
+  }
+
+  function promptRemove(id, name, date, shift) {
+    pendingRemoveId = { id, name, date, shift };
+    document.getElementById('modalDesc').textContent =
+      'This will remove the signup for ' + formatDate(date) + '. If you have already been added to the labor plan, contact your supervisor directly.';
+    document.getElementById('modalOverlay').classList.add('active');
+  }
+
+  function closeModal() {
+    pendingRemoveId = null;
+    document.getElementById('modalOverlay').classList.remove('active');
+  }
+
+  function confirmRemove() {
+    if (!pendingRemoveId) return;
+    const { name, date, shift } = pendingRemoveId;
+    const currentName = document.getElementById('empName').value.trim();
+    closeModal();
+
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'remove', name, date, shift })
+    })
+    .then(res => res.json())
+    .catch(() => ({}))
+    .finally(() => {
+      pendingRemoveId = null;
+      showSuccess('Signup removed.');
+      // Refresh signups from sheet
+      fetchSignups(currentName);
+    });
+  }
+
+  document.getElementById('modalOverlay').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  function showSuccess(msg) {
+    hideAllToasts();
+    document.getElementById('toastMsg').textContent = msg;
+    const t = document.getElementById('successToast');
+    t.style.display = 'flex';
+    setTimeout(() => { t.style.display = 'none'; }, 5000);
+  }
+
+  function showError(msg) {
+    hideAllToasts();
+    document.getElementById('errorMsg').textContent = msg;
+    const t = document.getElementById('errorToast');
+    t.style.display = 'flex';
+    setTimeout(() => { t.style.display = 'none'; }, 6000);
+  }
+
+  function showWarning(msg) {
+    hideAllToasts();
+    document.getElementById('warningMsg').textContent = msg;
+    const t = document.getElementById('warningToast');
+    t.style.display = 'flex';
+    setTimeout(() => { t.style.display = 'none'; }, 10000);
+  }
+
+  function hideAllToasts() {
+    ['successToast','errorToast','warningToast'].forEach(id => {
+      document.getElementById(id).style.display = 'none';
+    });
+  }
+
+  function highlight(id) {
+    const el = document.getElementById(id);
+    el.style.borderColor = '#e53e3e';
+    el.focus();
+    setTimeout(() => { el.style.borderColor = ''; }, 2000);
+  }
+
+  function formatDate(d) {
+    if (!d) return '';
+    // Parse parts directly to avoid timezone shift from UTC midnight conversion
+    const parts = String(d).split('-');
+    if (parts.length === 3) {
+      const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      return months[parseInt(parts[1],10)-1] + ' ' + parseInt(parts[2],10) + ', ' + parts[0];
+    }
+    // Fallback for unexpected formats
+    const dt = new Date(d);
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return months[dt.getUTCMonth()] + ' ' + dt.getUTCDate() + ', ' + dt.getUTCFullYear();
+  }
+
+  function escHtml(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
+</script>
+</body>
+</html>
